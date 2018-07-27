@@ -50,6 +50,10 @@ mutation($text: String!) {
 
 class App extends Component {
 
+    state = {
+        todos: []
+    }
+
     updateTodo = async todo => {
         await this.props.updateTodo({
             variables: {
@@ -94,38 +98,48 @@ class App extends Component {
         })
     }
 
+
+    // componentDidMount(){
+    //     this.setState(todos)
+    // }
+
+
     render() {
         const {data: {loading, todos}} = this.props
         if (loading) {
             return null
         }
+        // console.log(this.state)
         return (
             <section style={{display: 'flex'}}>
                 <section style={{margin: 'auto', width: 400}}>
                     <Paper elevation={10}>
                         <Form submit={this.createTodo} />
                         <List>
-                            {todos.map(todo => (
-                                <ListItem
-                                    key={todo.id}
-                                    role={undefined}
-                                    dense
-                                    button
-                                    onClick={() => this.updateTodo(todo)}
-                                >
-                                    <Checkbox
-                                        checked={todo.complete}
-                                        tabIndex={-1}
-                                        disableRipple
-                                    />
-                                    <ListItemText primary={todo.text}/>
-                                    <ListItemSecondaryAction>
-                                        <IconButton onClick={() => this.removeTodo(todo)}>
-                                            <DeleteIcon/>
-                                        </IconButton>
-                                    </ListItemSecondaryAction>
-                                </ListItem>
-                            ))}
+                            {todos.map(todo => {
+                                // console.log(todo)
+                                return (
+                                    <ListItem
+                                        key={todo.id}
+                                        role={undefined}
+                                        dense
+                                        button
+                                        onClick={() => this.updateTodo(todo)}
+                                    >
+                                        <Checkbox
+                                            checked={todo.complete}
+                                            tabIndex={-1}
+                                            disableRipple
+                                        />
+                                        <ListItemText primary={todo.text}/>
+                                        <ListItemSecondaryAction>
+                                            <IconButton onClick={() => this.removeTodo(todo)}>
+                                                <DeleteIcon/>
+                                            </IconButton>
+                                        </ListItemSecondaryAction>
+                                    </ListItem>
+                                )
+                            })}
                         </List>
                     </Paper>
                 </section>

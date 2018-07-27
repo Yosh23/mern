@@ -20,6 +20,7 @@ export default class extends Component {
         if(e.key === 'Enter') {
             this.props.submit(this.state.text)
             this.setState({text: ""})
+           window.location.reload(true)
         }
     }
     render() {
