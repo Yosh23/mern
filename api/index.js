@@ -4,8 +4,7 @@ const { GraphQLServer } = require('graphql-yoga')
 const mongoose = require('mongoose')
 
 
-mongoose.connect("mongodb://localhost/test23")
-
+mongoose.connect("mongodb://josh:passw0rd@ds127948.mlab.com:27948/todo")
 //mongoose schema
 
 const Todo = mongoose.model('Todo', {
@@ -16,7 +15,6 @@ const Todo = mongoose.model('Todo', {
 // graphql schema
 const typeDefs = `
   type Query {
-    hello(name: String): String!
     todos: [Todo]
   }
   
@@ -37,7 +35,6 @@ const typeDefs = `
 // set resolvers here
 const resolvers = {
     Query: {
-        hello: (_, { name }) => `Hello ${name || 'World'}`,
         todos: () => Todo.find()
     },
     Mutation: {
@@ -61,5 +58,5 @@ const resolvers = {
 
 const server = new GraphQLServer({ typeDefs, resolvers })
 mongoose.connection.once('open', function() {
-    server.start(() => console.log('Server is running on localhost:4000'))
+    server.start(() => console.log('Server is running on mLab'))
 })
